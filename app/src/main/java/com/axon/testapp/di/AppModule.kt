@@ -30,12 +30,7 @@ object AppModule {
     fun provideUserService(retrofit: Retrofit): UserService =
         retrofit.create(UserService::class.java)
 
-//    @Singleton
-//    @Provides
-//    fun provideUserRemoteDataSource(userService: UserService) = UserRemoteDataSource(userService)
-
     @Singleton
     @Provides
-//    fun provideRepository(remoteDataSource: UserRemoteDataSource) = UserRepository(remoteDataSource)
     fun provideRepository(userService: UserService) = UserRepository(userService)
 }
