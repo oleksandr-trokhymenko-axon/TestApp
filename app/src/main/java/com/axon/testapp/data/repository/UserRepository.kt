@@ -6,5 +6,5 @@ import javax.inject.Inject
 class UserRepository @Inject constructor(
     private val userService: UserService
 ) {
-    suspend fun getUsers(result: Int) = userService.getAllUsers(result).result
+    suspend fun getUsers(result: Int) = userService.getAllUsers(result).results
 }

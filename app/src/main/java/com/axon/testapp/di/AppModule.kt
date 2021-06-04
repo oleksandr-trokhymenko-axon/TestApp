@@ -8,6 +8,7 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import javax.inject.Singleton
@@ -22,9 +23,6 @@ object AppModule {
         .baseUrl("https://randomuser.me/")
         .addConverterFactory(GsonConverterFactory.create())
         .build()
-//
-//    @Provides
-//    fun provideGson(): Gson = GsonBuilder().create()
 
     @Provides
     fun provideUserService(retrofit: Retrofit): UserService =
