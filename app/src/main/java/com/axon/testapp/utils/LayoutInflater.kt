@@ -1,4 +1,4 @@
-package com.axon.testapp.extention
+package com.axon.testapp.utils
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -10,7 +10,10 @@ inline fun <reified T : ViewBinding> LayoutInflater.inflateVB(
 ): T {
     return when {
         parent == null -> {
-            val method = T::class.java.getMethod("inflate", LayoutInflater::class.java)
+            val method = T::class.java.getMethod(
+                "inflate",
+                LayoutInflater::class.java
+            )
             method.invoke(null, this) as T
         }
 

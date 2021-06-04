@@ -3,21 +3,20 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/usersListFragment">
+    app:startDestination="@id/usersFragment">
 
     <fragment
-        android:id="@+id/usersListFragment"
-        android:name="com.axon.testapp.ui.userslist.UsersListFragment"
-        android:label="Choose user"
-        tools:layout="@layout/fragment_users_list">
+        android:id="@+id/usersFragment"
+        android:name="com.axon.testapp.ui.users.UsersFragment"
+        android:label="Users"
+        tools:layout="@layout/users_fragment" >
         <action
-            android:id="@+id/action_usersListFragment_to_detailsFragment"
-            app:destination="@id/detailsFragment" />
+            android:id="@+id/action_usersFragment_to_userDetailFragment"
+            app:destination="@id/userDetailFragment" />
     </fragment>
     <fragment
-        android:id="@+id/detailsFragment"
-        android:name="com.axon.testapp.ui.usersdetails.DetailsFragment"
-        android:label="User details"
-        tools:layout="@layout/fragment_details">
-    </fragment>
+        android:id="@+id/userDetailFragment"
+        android:name="com.axon.testapp.ui.userdetail.UserDetailFragment"
+        android:label="User Detail"
+        tools:layout="@layout/user_detail_fragment" />
 </navigation>

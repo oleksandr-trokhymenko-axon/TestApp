@@ -1,6 +1,9 @@
 package com.axon.testapp.di
 
-import com.axon.testapp.api.UsersApi
+import com.axon.testapp.data.remote.UserService
+import com.axon.testapp.data.repository.UserRepository
+import com.google.gson.Gson
+import com.google.gson.GsonBuilder
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -13,16 +16,26 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 object AppModule {
 
-    @Provides
     @Singleton
-    fun provideRetrofit(): Retrofit =
-        Retrofit.Builder()
-            .baseUrl(UsersApi.BASE_URL)
-            .addConverterFactory(GsonConverterFactory.create())
-            .build()
+    @Provides
+    fun provideRetrofit(gson: Gson): Retrofit = Retrofit.Builder()
+        .baseUrl("https://randomuser.me/")
+        .addConverterFactory(GsonConverterFactory.create(gson))
+        .build()
 
     @Provides
+    fun provideGson(): Gson = GsonBuilder().create()
+
+    @Provides
+    fun provideUserService(retrofit: Retrofit): UserService =
+        retrofit.create(UserService::class.java)
+
+//    @Singleton
+//    @Provides
+//    fun provideUserRemoteDataSource(userService: UserService) = UserRemoteDataSource(userService)
+
     @Singleton
-    fun provideUsersApi(retrofit: Retrofit): UsersApi =
-        retrofit.create(UsersApi::class.java)
+    @Provides
+//    fun provideRepository(remoteDataSource: UserRemoteDataSource) = UserRepository(remoteDataSource)
+    fun provideRepository(userService: UserService) = UserRepository(userService)
 }

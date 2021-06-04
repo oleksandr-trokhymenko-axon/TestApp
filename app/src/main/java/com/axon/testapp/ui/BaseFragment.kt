@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import androidx.core.view.ViewCompat
 import androidx.fragment.app.Fragment
 import androidx.viewbinding.ViewBinding
-import com.axon.testapp.extention.inflateVB
+import com.axon.testapp.utils.inflateVB
 
 abstract class BaseFragment<VB : ViewBinding> : Fragment() {
 
