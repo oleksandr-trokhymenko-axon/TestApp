@@ -44,11 +44,16 @@ class UserViewHolder(
     @SuppressLint("SetTextI18n")
     fun bind(item: User) {
         this.user = item
-        itemUserBinding.textView.text = item.name.first + item.name.last
-        Glide.with(itemUserBinding.root)
-            .load(item.picture.large)
-            .transform(CircleCrop())
-            .into(itemUserBinding.imageView)
+        itemUserBinding.apply {
+            nameTv.text = item.name.first + " " + item.name.last
+            ageTv.text = item.dob.age.toString() + " y.o."
+            countryTv.text = item.location.country
+
+            Glide.with(itemUserBinding.root)
+                .load(item.picture.large)
+                .transform(CircleCrop())
+                .into(itemUserBinding.imageView)
+        }
     }
 
     override fun onClick(v: View?) {

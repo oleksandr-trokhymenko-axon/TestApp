@@ -7,6 +7,8 @@ data class User(
     val picture: UserPicture,
     @SerializedName("name")
     val name: UserName,
+    @SerializedName("location")
+    val location: UserLocation,
     @SerializedName("gender")
     val gender: String,
     @SerializedName("login")
@@ -30,6 +32,11 @@ data class User(
         val first: String,
         @SerializedName("last")
         val last: String
+    )
+
+    data class UserLocation(
+        @SerializedName("country")
+        val country: String
     )
 
     data class UserLogin(
