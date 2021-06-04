@@ -28,14 +28,6 @@ class UsersAdapter(private val listener: UserItemListener, private var listOfUse
     interface UserItemListener {
         fun onClickedUser(userUuid: String)
     }
-
-//    private var listOfUsers: List<User> = ArrayList()
-
-//    fun setUserList(userList: List<User>) {
-//        this.listOfUsers = userList
-//        notifyDataSetChanged()
-//    }
-//    }
 }
 
 class UserViewHolder(

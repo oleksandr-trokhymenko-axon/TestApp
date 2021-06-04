@@ -37,8 +37,8 @@ class UsersFragment : BaseFragment<UsersFragmentBinding>(), UsersAdapter.UserIte
     private fun setupList() {
         lifecycleScope.launch {
             viewModel.users.collect { users ->
-                Log.d("troxumenko", "Hello world, its coroutine is working! :)")
-                Log.d("troxumenko", users.toString())
+                Log.d("qwerty", "Hello world, its coroutine is working! :)")
+                Log.d("qwerty", users.toString())
 //                setupRecyclerView(users)
             }
         }

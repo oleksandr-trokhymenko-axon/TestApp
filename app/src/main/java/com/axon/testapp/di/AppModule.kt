@@ -18,13 +18,13 @@ object AppModule {
 
     @Singleton
     @Provides
-    fun provideRetrofit(gson: Gson): Retrofit = Retrofit.Builder()
+    fun provideRetrofit(): Retrofit = Retrofit.Builder()
         .baseUrl("https://randomuser.me/")
-        .addConverterFactory(GsonConverterFactory.create(gson))
+        .addConverterFactory(GsonConverterFactory.create())
         .build()
-
-    @Provides
-    fun provideGson(): Gson = GsonBuilder().create()
+//
+//    @Provides
+//    fun provideGson(): Gson = GsonBuilder().create()
 
     @Provides
     fun provideUserService(retrofit: Retrofit): UserService =
