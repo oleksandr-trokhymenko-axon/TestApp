@@ -8,6 +8,6 @@ interface UserService {
 
     @GET("api/")
     suspend fun getAllUsers(
-        @Query("results") result: Int
-    ) : UserList
+        @Query("page") page: Int,
+    ): UserList
 }

@@ -36,7 +36,9 @@ data class User(
 
     data class UserLocation(
         @SerializedName("country")
-        val country: String
+        val country: String,
+        @SerializedName("city")
+        val city: String
     )
 
     data class UserLogin(

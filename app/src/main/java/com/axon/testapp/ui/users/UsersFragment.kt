@@ -5,9 +5,12 @@ import android.util.Log
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.os.bundleOf
+import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import androidx.paging.LoadState
+import androidx.paging.PagingData
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.axon.testapp.R
 import com.axon.testapp.data.entities.User
@@ -25,19 +28,41 @@ class UsersFragment : BaseFragment<UsersFragmentBinding>(), UsersAdapter.UserIte
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        setupList()
-    }
 
-    private fun setupRecyclerView(users: List<User>) {
-        adapter = UsersAdapter(this, users)
-        binding.usersRv.layoutManager = LinearLayoutManager(requireContext())
-        binding.usersRv.adapter = adapter
-    }
+        adapter = UsersAdapter(this)
 
-    private fun setupList() {
-        lifecycleScope.launch {
-            viewModel.users.collect { users ->
-                setupRecyclerView(users)
+        binding.apply {
+            rvUsers.layoutManager = LinearLayoutManager(requireContext())
+            rvUsers.setHasFixedSize(true)
+            rvUsers.adapter = adapter.withLoadStateHeaderAndFooter(
+                header = UserLoadStateAdapter { adapter.retry() },
+                footer = UserLoadStateAdapter { adapter.retry() }
+            )
+            btnRetry.setOnClickListener {
+                adapter.retry()
+            }
+        }
+
+        viewModel.users.observe(viewLifecycleOwner) {
+            adapter.submitData(viewLifecycleOwner.lifecycle, it)
+        }
+
+        adapter.addLoadStateListener { loadState ->
+            binding.apply {
+                pbChooseUser.isVisible = loadState.source.refresh is LoadState.Loading
+                rvUsers.isVisible = loadState.source.refresh is LoadState.NotLoading
+                btnRetry.isVisible = loadState.source.refresh is LoadState.Error
+                tvError.isVisible = loadState.source.refresh is LoadState.Error
+
+                if (loadState.source.refresh is LoadState.NotLoading &&
+                    loadState.append.endOfPaginationReached &&
+                    adapter.itemCount < 1
+                ) {
+                    rvUsers.isVisible = false
+                    tvEmpty.isVisible = true
+                } else {
+                    tvEmpty.isVisible = false
+                }
             }
         }
     }
